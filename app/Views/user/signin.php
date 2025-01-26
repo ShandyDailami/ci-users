@@ -1,6 +1,13 @@
 <?= $this->extend('template/main') ?>
 <?= $this->section('content') ?>
 <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+  <?php if (session()->getFlashdata('message')): ?>
+    <div class="position-fixed mt-2 me-2 top-0 end-0">
+      <div class="alert alert-success flash-message">
+        <?= session()->getFlashdata('message') ?>
+      </div>
+    </div>
+  <?php endif ?>
   <div class="card col-md-4 mx-auto">
     <div class="card-body">
       <h5 class="card-title text-center">Sign In</h5>

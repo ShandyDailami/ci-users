@@ -1,0 +1,15 @@
+.flash-message {
+  transform: translateY(-20px);
+  transition: .5s ease, opacity .5s ease;
+  opacity: 0;
+}
+
+.flash-message.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.flash-message.hide {
+  transform: translateY(-20px);
+  opacity: 0;
+}
