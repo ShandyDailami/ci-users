@@ -8,6 +8,11 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', [Users::class, 'index']);
 $routes->get('/signin', [Users::class, 'signinPage']);
+$routes->post('/signin', [Users::class, 'signin']);
+
 $routes->get('/signup', [Users::class, 'signupPage']);
 $routes->post('/signup', [Users::class, 'signup']);
+
 $routes->get('/forgotPassword', [Users::class, 'forgotPasswordPage']);
+
+$routes->get('/dashboard', [Users::class, 'dashboardPage']);

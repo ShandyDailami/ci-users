@@ -18,6 +18,49 @@ class Users extends BaseController
         return view('user/signin', ['title' => 'Sign in Page']);
     }
 
+    public function signin()
+    {
+        helper('form');
+
+        if (
+            $this->validate([
+                'username' => [
+                    'rules' => 'required|min_length[3]|max_length[255]',
+                    'errors' => [
+                        'required' => 'Username cannot be empty.',
+                        'min_length' => 'Username must be at least 3 characters long.',
+                        'max_length' => 'Username can be up to 255 characters long.',
+                    ]
+                ],
+                'password' => [
+                    'rules' => 'required|min_length[8]|max_length[255]',
+                    'errors' => [
+                        'required' => 'Password cannot be empty.',
+                        'min_length' => 'Password must be at least 8 characters long.',
+                        'max_length' => 'Password cannot exceed 255 characters.',
+                    ]
+                ]
+            ])
+        ) {
+            $username = $this->request->getPost('username');
+            $password = $this->request->getPost('password');
+
+            $model = new User();
+            $user = $model->where('username', $username)->first();
+
+            if ($user && password_verify($password, $user['password'])) {
+                session()->set('id', $user['id']);
+
+                return redirect()->to('/dashboard');
+            } else {
+                session()->setFlashdata('error', 'Wrong username or password');
+                return redirect()->to('/signin');
+            }
+        } else {
+            return redirect()->to('/signin')->withInput()->with('errors', $this->validator->getErrors());
+        }
+    }
+
     public function signupPage()
     {
         return view('user/signup', ['title' => 'Sign up Page']);
@@ -91,5 +134,15 @@ class Users extends BaseController
     public function forgotPasswordPage()
     {
         return view('user/forgotPassword', ['title' => 'Forgot Password Page']);
+    }
+
+    public function forgotPassword()
+    {
+
+    }
+
+    public function dashboardPage()
+    {
+        return view('user/dashboard', ['title' => 'Dashboard Page']);
     }
 }
