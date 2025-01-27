@@ -50,6 +50,7 @@ class Users extends BaseController
 
             if ($user && password_verify($password, $user['password'])) {
                 session()->set('id', $user['id']);
+                session()->setFlashdata('message', 'You have successfully signed in.');
 
                 return redirect()->to('/dashboard');
             } else {
@@ -59,6 +60,13 @@ class Users extends BaseController
         } else {
             return redirect()->to('/signin')->withInput()->with('errors', $this->validator->getErrors());
         }
+    }
+
+    public function logout()
+    {
+        session()->setFlashdata('message', 'You have been logged out successfully.');
+        session()->remove('id');
+        return redirect()->to('/signin');
     }
 
     public function signupPage()

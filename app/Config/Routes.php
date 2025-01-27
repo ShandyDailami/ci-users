@@ -17,3 +17,4 @@ $routes->get('/forgotPassword', [Users::class, 'forgotPasswordPage']);
 
 $routes->get('/dashboard', [Users::class, 'dashboard']);
 $routes->post('/update', [Users::class, 'update']);
+$routes->get('/logout', [Users::class, 'logout']);

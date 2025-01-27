@@ -22,11 +22,12 @@
     <?php endforeach ?>
   <?php endif ?>
 </div>
-<div class="row container-fluid" style="height: 100vh">
+<div class="row container-fluid" style="height: 92vh">
+
   <div class="col-2 p-0 border-end d-flex flex-column align-items-center justify-content-start">
     <h5 class="my-5 fw-bold">User Profile</h5>
     <div class="col-12 d-flex flex-column">
-      <a href="#" class="text-decoration-none link-hover py-2 ps-4 fs-5 active">
+      <a href="/dashboard" class="text-decoration-none link-hover py-2 ps-4 fs-5 active">
         <i class="bi bi-person me-3"></i>User info
       </a>
       <a href="#" class="text-decoration-none link-hover py-2 ps-4 fs-5">
@@ -35,6 +36,9 @@
       <a href="#" class="text-decoration-none link-hover py-2 ps-4 fs-5">
         <i class="bi bi-box me-3"></i>Item 1
       </a>
+      <a href="/logout" class="text-decoration-none text-danger link-hover-danger py-2 ps-4 fs-5"><i
+          class="bi bi-box-arrow-left me-3"></i>Log
+        out</a>
     </div>
   </div>
   <div class="col-10 d-flex flex-column align-items-center justify-content-center ps-5 pe-0">

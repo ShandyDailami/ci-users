@@ -28,6 +28,11 @@
   border-right: var(--bs-warning-border-subtle) solid;
 }
 
+.link-hover-danger:hover {
+  padding-left: 2px;
+  border-right: var(--bs-danger-border-subtle) solid;
+}
+
 .active {
   color: var(--bs-dark);
   padding-left: 2px;
@@ -36,4 +41,5 @@
 
 .profile {
   width: 150px;
+  height: 150px;
 }
