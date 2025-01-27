@@ -157,4 +157,51 @@ class Users extends BaseController
         ];
         return view('user/dashboard', $data);
     }
+
+    public function update()
+    {
+        helper('form');
+        $id = $this->request->getPost('id');
+        $username = $this->request->getPost('username');
+        $email = $this->request->getPost('email');
+
+        $model = new User();
+        $user = $model->find($id);
+
+        $usernameRules = 'required|min_length[3]|max_length[255]';
+        if ($username !== $user['username']) {
+            $usernameRules .= '|is_unique[users.username]';
+        }
+
+        if (
+            $this->validate([
+                'username' => [
+                    'rules' => $usernameRules,
+                    'errors' => [
+                        'required' => 'Username cannot be empty.',
+                        'min_length' => 'Username must be at least 3 characters long.',
+                        'max_length' => 'Username can be up to 255 characters long.',
+                        'is_unique' => 'This username is already taken. Please choose another one.',
+                    ]
+                ],
+                'email' => [
+                    'rules' => 'required|valid_email',
+                    'errors' => [
+                        'required' => 'Email cannot be empty.',
+                        'valid_email' => 'Please enter a valid email address.',
+                    ]
+                ]
+            ])
+        ) {
+            $model->update($id, [
+                'username' => $username,
+                'email' => $email
+            ]);
+
+            session()->setFlashdata('message', 'Data updated successfully');
+            return redirect()->to('/dashboard');
+        } else {
+            return redirect()->to('/dashboard')->withInput()->with('errors', $this->validator->getErrors());
+        }
+    }
 }

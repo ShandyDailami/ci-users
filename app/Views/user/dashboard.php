@@ -9,6 +9,19 @@
     </div>
   </div>
 </nav>
+<div class="position-fixed mt-2 me-2 top-0 end-0">
+  <?php if (session()->getFlashdata('message')): ?>
+    <div class="alert alert-success flash-message">
+      <?= session()->getFlashdata('message') ?>
+    </div>
+  <?php elseif (session()->getFlashdata('errors')): ?>
+    <?php foreach (session()->getFlashdata('errors') as $error): ?>
+      <div class="alert alert-danger flash-message">
+        <?= esc($error) ?>
+      </div>
+    <?php endforeach ?>
+  <?php endif ?>
+</div>
 <div class="row container-fluid" style="height: 100vh">
   <div class="col-2 p-0 border-end d-flex flex-column align-items-center justify-content-start">
     <h5 class="my-5 fw-bold">User Profile</h5>
@@ -30,7 +43,9 @@
         alt="">
       <span class="fs-4" style="cursor: pointer"><?= esc($user['username']) ?></span>
     </div>
-    <form action="" class="d-flex flex-column align-items-center justify-content-center">
+    <form action="/update" method="post" class="d-flex flex-column align-items-center justify-content-center">
+      <?= csrf_field() ?>
+      <input type="hidden" name="id" value="<?= esc($user['id']) ?>">
       <div class="row mb-3">
         <div class="col">
           <label for="username" class="form-label">Username</label>
