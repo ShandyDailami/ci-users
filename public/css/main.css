@@ -1,3 +1,7 @@
+/* body {
+  overflow-x: hidden;
+} */
+
 .flash-message {
   transform: translateY(-20px);
   transition: .5s ease, opacity .5s ease;
@@ -12,4 +16,24 @@
 .flash-message.hide {
   transform: translateY(-20px);
   opacity: 0;
+}
+
+.link-hover {
+  color: var(--bs-secondary-color);
+}
+
+.link-hover:hover {
+  color: var(--bs-dark);
+  padding-left: 2px;
+  border-right: var(--bs-warning-border-subtle) solid;
+}
+
+.active {
+  color: var(--bs-dark);
+  padding-left: 2px;
+  border-right: var(--bs-warning-border-subtle) solid;
+}
+
+.profile {
+  width: 150px;
 }

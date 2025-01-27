@@ -12,7 +12,7 @@
           <?= esc($error) ?>
         </div>
       <?php endforeach ?>
-    <?php else: ?>
+    <?php elseif (session()->getFlashdata('error')): ?>
       <div class="alert alert-danger flash-message">
         <?= session()->getFlashdata('error') ?>
       </div>

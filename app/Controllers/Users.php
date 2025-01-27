@@ -72,8 +72,8 @@ class Users extends BaseController
 
         if (
             $this->validate([
-                'profile' => [
-                    'rules' => 'uploaded[profile]|is_image[profile]|max_size[profile,1024]',
+                'path' => [
+                    'rules' => 'uploaded[path]|is_image[path]|max_size[path,1024]',
                     'errors' => [
                         'uploaded' => 'Please upload a profile picture.',
                         'is_image' => 'The file must be a valid image (jpg, png, gif).',
@@ -112,7 +112,7 @@ class Users extends BaseController
                 ],
             ])
         ) {
-            $profile = $this->request->getFile('profile');
+            $profile = $this->request->getFile('path');
             $filename = $profile->getRandomName();
             $profile->move(ROOTPATH . 'public/uploads', $filename);
 
@@ -122,7 +122,7 @@ class Users extends BaseController
                 'email' => $this->request->getPost('email'),
                 'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
                 'role' => $this->request->getPost('role'),
-                'profile' => $filename,
+                'path' => $filename,
             ]);
 
             return redirect()->to('/signin')->with('message', 'Account successfully registered');
@@ -141,8 +141,20 @@ class Users extends BaseController
 
     }
 
-    public function dashboardPage()
+    public function dashboard()
     {
-        return view('user/dashboard', ['title' => 'Dashboard Page']);
+        if (!session()->has('id')) {
+            return redirect()->to('/signin');
+        }
+
+        $id = session()->get('id');
+
+        $model = new User();
+        $user = $model->find($id);
+        $data = [
+            'title' => 'Dashboard Page',
+            'user' => $user,
+        ];
+        return view('user/dashboard', $data);
     }
 }

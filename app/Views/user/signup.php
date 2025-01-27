@@ -17,7 +17,7 @@
         <?= csrf_field() ?>
         <div class="mb-3">
           <label for="profile" class="form-label">Profile</label>
-          <input type="file" id="profile" name="profile" class="form-control">
+          <input type="file" id="profile" name="path" class="form-control">
         </div>
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
