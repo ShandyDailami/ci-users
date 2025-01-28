@@ -10,7 +10,7 @@ class Admins extends BaseController
 {
     public function index()
     {
-        return view('admin/signin', ['title' => 'Admin']);
+        return view('admin/signin', ['title' => 'Admin - Sign In']);
     }
 
     public function signinAdmin()
@@ -44,15 +44,21 @@ class Admins extends BaseController
             $role = $this->request->getPost('role');
 
             $model = new User();
-            $admin = $model->where('username')->first();
+            $admin = $model->where($username)->orWhere('email', $username)->first();
 
             if ($admin && password_verify($password, $admin['password'])) {
-                session()->set('id', $admin['id']);
-                session()->setFlashdata('message', 'You have successfully signed in');
+                if ($admin['role'] === $role) {
+                    session()->set('id', $admin['id']);
+                    session()->set('role', $admin['role']);
+                    session()->setFlashdata('message', 'You have successfully signed in');
 
-                return view('/adminPanel');
+                    return redirect()->to('/adminPanel');
+                } else {
+                    session()->setFlashdata('error', 'Unauthorized role.');
+                    return redirect()->to('admin/signin');
+                }
             } else {
-                session()->setFlashdata('error', 'Wrong username or password');
+                session()->setFlashdata('error', 'Invalid Credential');
                 return redirect()->to('admin/signin');
             }
         } else {
@@ -62,6 +68,11 @@ class Admins extends BaseController
 
     public function signupAdminPage()
     {
-        return view('admin/signup', ['title' => 'Admin Sign Up']);
+        return view('admin/signup', ['title' => 'Admin - Sign Up']);
+    }
+
+    public function forgotPasswordAdminPage()
+    {
+        return view('admin/forgotPassword', ['title' => 'Admin - Forgot Password']);
     }
 }

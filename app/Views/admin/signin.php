@@ -21,7 +21,7 @@
   <div class="card col-md-4 mx-auto">
     <div class="card-body">
       <h5 class="card-title text-center">Sign In</h5>
-      <form action="/signin" method="post">
+      <form action="/admin/signin" method="post">
         <?= csrf_field() ?>
         <div class="mb-3">
           <label for="username" class="form-label">Username or Email</label>
@@ -31,12 +31,21 @@
           <label for="password" class="form-label">Password</label>
           <input type="password" id="password" name="password" class="form-control">
         </div>
+        <div class="mb-3">
+          <label for="role" class="form-label">Role</label>
+          <select class="form-select" id="role" aria-label="role">
+            <option selected disabled>Select Role</option>
+            <option value="admin">Admin</option>
+            <option value="super admin">Super Admin</option>
+            <option value="editor">Editor</option>
+          </select>
+        </div>
         <div class="mb-3 text-end">
-          <a href="/forgotPassword">Forgot Password</a>
+          <a href="/admin/forgotPassword">Forgot Password</a>
         </div>
         <button type="submit" name="submit" class="btn btn-primary w-100 mb-3">Sign In</button>
         <div class="text-center">
-          Do you haven't account? <a href="/signup">Sign Up</a>
+          Do you haven't account? <a href="/admin/signup">Sign Up</a>
         </div>
       </form>
     </div>

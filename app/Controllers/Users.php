@@ -46,13 +46,13 @@ class Users extends BaseController
             $password = $this->request->getPost('password');
 
             $model = new User();
-            $user = $model->where('username', $username)->first();
+            $user = $model->where('username', $username)->orWhere('email', $username)->first();
 
             if ($user && password_verify($password, $user['password'])) {
                 session()->set('id', $user['id']);
                 session()->setFlashdata('message', 'You have successfully signed in.');
 
-                return redirect()->to('/dashboard');
+                return redirect()->to('/profile');
             } else {
                 session()->setFlashdata('error', 'Wrong username or password');
                 return redirect()->to('/signin');
@@ -149,7 +149,7 @@ class Users extends BaseController
 
     }
 
-    public function dashboard()
+    public function profile()
     {
         if (!session()->has('id')) {
             return redirect()->to('/signin');
@@ -160,10 +160,10 @@ class Users extends BaseController
         $model = new User();
         $user = $model->find($id);
         $data = [
-            'title' => 'Dashboard Page',
+            'title' => 'Profile Page',
             'user' => $user,
         ];
-        return view('user/dashboard', $data);
+        return view('user/profile', $data);
     }
 
     public function update()
@@ -207,9 +207,9 @@ class Users extends BaseController
             ]);
 
             session()->setFlashdata('message', 'Data updated successfully');
-            return redirect()->to('/dashboard');
+            return redirect()->to('/profile');
         } else {
-            return redirect()->to('/dashboard')->withInput()->with('errors', $this->validator->getErrors());
+            return redirect()->to('/profile')->withInput()->with('errors', $this->validator->getErrors());
         }
     }
 }
