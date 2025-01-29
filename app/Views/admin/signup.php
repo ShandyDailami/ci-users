@@ -31,7 +31,7 @@
         </div>
         <div class="mb-3">
           <label for="role" class="form-label">Role</label>
-          <select class="form-select" id="role" aria-label="role">
+          <select class="form-select" name="role" id="role" aria-label="role">
             <option selected disabled>Select Role</option>
             <option value="admin">Admin</option>
             <option value="super admin">Super Admin</option>
@@ -42,7 +42,6 @@
           <label for="password" class="form-label">Password</label>
           <input type="password" id="password" name="password" class="form-control">
         </div>
-        <input type="hidden" name="role" value="user">
         <button type="submit" name="submit" class="btn btn-primary w-100 mb-3">Sign Up</button>
         <div class="text-center">
           Do you have account? <a href="/signin">Sign In</a>

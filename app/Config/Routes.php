@@ -29,6 +29,6 @@ $routes->group('admin', function ($routes) {
   $routes->get('signup', [Admins::class, 'signupAdminPage']);
   $routes->post('signup', [Admins::class, 'signupAdmin']);
 
-  $routes->get('panel', [Admins::class, 'panel']);
+  $routes->get('panel', [Admins::class, 'panelPage']);
   $routes->get('forgotPassword', [Admins::class, 'forgotPasswordAdminPage']);
 });

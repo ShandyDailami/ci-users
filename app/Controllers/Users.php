@@ -98,10 +98,11 @@ class Users extends BaseController
                     ]
                 ],
                 'email' => [
-                    'rules' => 'required|valid_email',
+                    'rules' => 'required|valid_email|is_unique[users.email]',
                     'errors' => [
                         'required' => 'Email cannot be empty.',
                         'valid_email' => 'Please enter a valid email address.',
+                        'is_unique' => 'This email is already registered. Please use a different email or log in instead.'
                     ]
                 ],
                 'password' => [
