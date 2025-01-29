@@ -50,6 +50,9 @@ class Users extends BaseController
 
             if ($user && password_verify($password, $user['password'])) {
                 session()->set('id', $user['id']);
+                session()->set('username', $user['username']);
+                session()->set('path', $user['path']);
+                session()->set('email', $user['email']);
                 session()->setFlashdata('message', 'You have successfully signed in.');
 
                 return redirect()->to('/profile');
@@ -62,16 +65,35 @@ class Users extends BaseController
         }
     }
 
+    public function profile()
+    {
+        if (!session()->has('id')) {
+            return redirect()->to('/signin');
+        }
+
+        $data = [
+            'title' => 'Profile Page',
+            'id' => session()->get('id'),
+            'username' => session()->get('username'),
+            'path' => session()->get('path'),
+            'email' => session()->get('email'),
+        ];
+
+        return view('user/profile', $data);
+    }
+
     public function logout()
     {
+
         session()->setFlashdata('message', 'You have been logged out successfully.');
-        session()->remove('id');
-        return redirect()->to('/signin');
+        session()->destroy();
+
+        return redirect()->to('/signin')->with('message', 'You have been logged out successfully.');
     }
 
     public function signupPage()
     {
-        return view('user/signup', ['title' => 'Sign up Page']);
+        return view('user/signup', ['title' => 'Sign Up']);
     }
 
     public function signup()
@@ -150,27 +172,10 @@ class Users extends BaseController
 
     }
 
-    public function profile()
-    {
-        if (!session()->has('id')) {
-            return redirect()->to('/signin');
-        }
-
-        $id = session()->get('id');
-
-        $model = new User();
-        $user = $model->find($id);
-        $data = [
-            'title' => 'Profile Page',
-            'user' => $user,
-        ];
-        return view('user/profile', $data);
-    }
-
     public function update()
     {
         helper('form');
-        $id = $this->request->getPost('id');
+        $id = session()->get('id');
         $username = $this->request->getPost('username');
         $email = $this->request->getPost('email');
 
@@ -206,7 +211,8 @@ class Users extends BaseController
                 'username' => $username,
                 'email' => $email
             ]);
-
+            session()->set('username', $username);
+            session()->set('email', $email);
             session()->setFlashdata('message', 'Data updated successfully');
             return redirect()->to('/profile');
         } else {

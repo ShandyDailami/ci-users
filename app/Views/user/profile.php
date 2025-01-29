@@ -4,8 +4,8 @@
   <div class="container d-flex justify-content-between">
     <i class="bi bi-list"></i>
     <div class="col-md-1 d-flex align-items-center justify-content-center" style="width: 30px;">
-      <img class="rounded-circle img-fluid me-2" src="<?php echo base_url('uploads/' . $user['path']); ?>" alt="">
-      <span style="cursor: pointer"><?= esc($user['username']) ?></span>
+      <img class="rounded-circle img-fluid me-2" src="<?php echo base_url('uploads/' . $path); ?>" alt="">
+      <span style="cursor: pointer"><?= esc($username) ?></span>
     </div>
   </div>
 </nav>
@@ -43,23 +43,21 @@
   </div>
   <div class="col-10 d-flex flex-column align-items-center justify-content-center ps-5 pe-0">
     <div class="d-flex align-items-center justify-content-start">
-      <img class="rounded-circle img-fluid me-5 profile" src="<?php echo base_url('uploads/' . $user['path']); ?>"
-        alt="">
-      <span class="fs-4" style="cursor: pointer"><?= esc($user['username']) ?></span>
+      <img class="rounded-circle img-fluid me-5 profile" src="<?php echo base_url('uploads/' . $path); ?>" alt="">
+      <span class="fs-4" style="cursor: pointer"><?= esc($username) ?></span>
     </div>
     <form action="/update" method="post" class="d-flex flex-column align-items-center justify-content-center">
       <?= csrf_field() ?>
-      <input type="hidden" name="id" value="<?= esc($user['id']) ?>">
       <div class="row mb-3">
         <div class="col">
           <label for="username" class="form-label">Username</label>
           <input type="text" class="form-control" id="username" name="username" placeholder="Username"
-            value="<?= esc($user['username']) ?>">
+            value="<?= esc($username) ?>">
         </div>
         <div class="col">
           <label for="email" class="form-label">Email address</label>
           <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
-            value="<?= esc($user['email']) ?>">
+            value="<?= esc($email) ?>">
         </div>
       </div>
       <button type="submit" name="submit" class="btn btn-primary text-center">Update</button>

@@ -49,7 +49,6 @@ class Admins extends BaseController
             if ($admin && password_verify($password, $admin['password'])) {
                 if ($admin['role'] === $role) {
                     session()->set('id', $admin['id']);
-                    session()->set('role', $admin['role']);
                     session()->setFlashdata('message', 'You have successfully signed in');
 
                     return redirect()->to('/admin/panel');
@@ -64,6 +63,14 @@ class Admins extends BaseController
         } else {
             return redirect()->to('/admin/signin')->withInput()->with('errors', $this->validator->getErrors());
         }
+    }
+
+    public function logout()
+    {
+        session()->setFlashdata('message', 'You have been logged out successfully.');
+        session()->remove('id');
+
+        return redirect()->to('/admin/signin');
     }
 
     public function signupAdminPage()
