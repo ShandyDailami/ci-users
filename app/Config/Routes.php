@@ -31,5 +31,8 @@ $routes->group('admin', function ($routes) {
 
   $routes->get('logout', [Admins::class, 'logout']);
   $routes->get('panel', [Admins::class, 'panelPage']);
+  $routes->get('delete/(:num)', [Admins::class, 'delete']);
+  $routes->get('edit/(:num)', [Admins::class, 'editPage']);
+  $routes->post('update/(:num)', [Admins::class, 'update']);
   $routes->get('forgotPassword', [Admins::class, 'forgotPasswordAdminPage']);
 });
